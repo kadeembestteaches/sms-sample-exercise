@@ -19,26 +19,15 @@ router.get("/message",(req,res)=>{
 
 router.post("/message",(req,res)=>{
     
-    const accountSid =`PUT YOUR ACCOUNT SID IN HERE` ;
-    const authToken = `PUT YOUR AUTH TOKEN IN HERE`;
+    const accountSid =process.env.ACCOUNT_SID ;
+    const authToken = process.env.AUTH_TOKEN;
     const client = require('twilio')(accountSid, authToken);
-
-
-    /*
-    partner.loveMeTilMyDyingDay()
-    .then(()=>{
-        console.log(`We are in love for ever ever`)
-    })
-    .catch(()=>{
-        console.log(`Left me for someone else. I am going to cry now`)
-    }) */
-
 
     client.messages
     .create({
         body: `Thank you, ${req.body.pName}. We got your message and we will respond shortly! Thank you!`,
         from: '+13175932694',
-        to: `PUT YOUR NUMBER IN HERE`, // Because we are using the trial version, we can only send sms text messaes to numbers that we have verified, i.e, our numbers
+        to: process.body.phoneNo, // Because we are using the trial version, we can only send sms text messaes to numbers that we have verified, i.e, our numbers
     })
     .then(()=>{
         res.redirect("/");
